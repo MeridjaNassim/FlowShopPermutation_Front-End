@@ -1,0 +1,13 @@
+.radioCheck{
+    margin: 10px;
+    border-top-right-radius: 10px;
+    border-radius: 8px;
+}
+
+.radioNEH{
+    padding: 1px;
+}
+
+.btn{
+    padding: 10px;
+}
