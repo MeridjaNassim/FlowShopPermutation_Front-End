@@ -90,6 +90,7 @@ function Branch_and_Bound(props) {
                   </Dropdown>
                   </Col>
                 </Row>
+                <br/>
                 <h5 className="pr-md-1" className="title">
                     Search Strategy
                   </h5>
@@ -112,7 +113,7 @@ function Branch_and_Bound(props) {
                       // onClick={() => setRSelected(2)}
                       // active={rSelected === 2}
                     >
-                      Two
+                      Best First Search
                     </Button>
                   </ButtonGroup>
                   </Col>
@@ -123,10 +124,22 @@ function Branch_and_Bound(props) {
                   // onClick={() => setRSelected(1)}
                   // active={rSelected === 1}
                 >
-                  One
+                  Initialisation avec heuristique
                 </Button>
                 
+                
               </Form>
+              <Row>
+              <Col className="pr-md-1" md="12">
+              <Button
+                  color="primary"
+                  // onClick={() => setRSelected(1)}
+                  // active={rSelected === 1}
+                >
+                  Log
+                </Button>
+                </Col>
+              </Row>
             </CardBody>
             <CardFooter>
               <Button className="btn-fill" color="primary" type="submit">

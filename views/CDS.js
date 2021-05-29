@@ -72,33 +72,7 @@ function CDS(props) {
                   </Dropdown>
                   </Col>
                 </Row>
-               <Row>
-                <Col className="pr-md-1" md="12">
-                  <ButtonGroup>
-                    <Button
-                      color="primary"
-                      // onClick={() => setRSelected(1)}
-                      // active={rSelected === 1}
-                    >
-                      One
-                    </Button>
-                    <Button
-                      color="primary"
-                      // onClick={() => setRSelected(2)}
-                      // active={rSelected === 2}
-                    >
-                      Two
-                    </Button>
-                  </ButtonGroup>
-                  </Col>
-                </Row>
-                <Button
-                      color="primary"
-                      // onClick={() => setRSelected(1)}
-                      // active={rSelected === 1}
-                    >
-                      One
-                    </Button>
+                
               </Form>
             </CardBody>
             <CardFooter>

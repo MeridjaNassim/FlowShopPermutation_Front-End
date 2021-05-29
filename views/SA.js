@@ -110,6 +110,8 @@ function SA(props) {
                       />
                       <label>Alpha</label>
                       <Input defaultValue="" placeholder="Alpha" type="text" />
+                      <label>Nombre d'itérations</label>
+                      <Input defaultValue="" placeholder="Nombre d'itérations" type="text" />
                     </FormGroup>
                   </Col>
                 </Row>
