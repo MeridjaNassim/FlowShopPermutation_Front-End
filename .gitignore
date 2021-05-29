@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 node_modules
+=======
+build
+node_modules
+package-lock.json
+/build
+.vscode
+.eslintcache
+>>>>>>> logic
