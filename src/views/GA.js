@@ -36,7 +36,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
+import InstanceSelector from "../components/InstanceSelector/InstanceSelector"
 function GA(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [taillePoulation, setTaillePopulation] = useState("");
@@ -77,20 +77,7 @@ function GA(props) {
                     </p>
                   </Col>
                 </Row>
-                <Row>
-                  <Col className="pr-md-1" md="12">
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                      <DropdownToggle caret>
-                        Choisir une Instance
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem>Foo Action</DropdownItem>
-                        <DropdownItem>Bar Action</DropdownItem>
-                        <DropdownItem>Quo Action</DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  </Col>
-                </Row>
+               <InstanceSelector></InstanceSelector>
 
                 <Row>
                   <Col md="12">

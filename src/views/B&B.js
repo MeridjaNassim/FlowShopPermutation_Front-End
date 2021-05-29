@@ -22,6 +22,7 @@ import "../assets/css/FSP.css"
 // reactstrap components
 import {
   Button,
+  Label,
   Card,
   CardHeader,
   CardBody,
@@ -38,6 +39,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import InstanceSelector from "components/InstanceSelector/InstanceSelector";
 
 function Branch_and_Bound(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -80,18 +82,16 @@ function Branch_and_Bound(props) {
                     </p>
                   </Col>
                 </Row>
+               <InstanceSelector></InstanceSelector>
+                {/* <h2 className="title">Upload instance</h2>
                 <Row>
-                <Col className="pr-md-1" md="12">
-                  <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                    <DropdownToggle caret>Choisir une Instance</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>Foo Action</DropdownItem>
-                      <DropdownItem>Bar Action</DropdownItem>
-                      <DropdownItem>Quo Action</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                  <Col md="12">
+                    <Input id="file-upload" type="file" style={{display : "none"}}></Input>
+                  <Button className="btn-fill" color="secondary">
+                    Upload instance
+                </Button>
                   </Col>
-                </Row>
+                </Row> */}
                 <br/>
                 <h5 className="pr-md-1" className="title">
                     Search Strategy
@@ -138,7 +138,7 @@ function Branch_and_Bound(props) {
                         onClick={() => setParallel(!parallel)}
                   // active={rSelected === 1}
                 >
-                  Log
+                  Run in Parallel
                 </Button>
                 </Col>
               </Row>

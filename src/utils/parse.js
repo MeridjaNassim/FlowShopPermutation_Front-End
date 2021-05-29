@@ -13,6 +13,7 @@ export function instanceFromStringMatrix(jobs,machines,costs_str,col_separator="
     if( costs_str === undefined || costs_str.length === 0)
         throw new Error("string representation of matrix should be provided and non blank")
     const rows = costs_str.trim().split(row_separator)
+    console.log(rows);
     if(rows.length !== jobs){
         throw new Error("job rows count do not match provided value")
     }

@@ -38,7 +38,7 @@ import {
   DropdownItem,
   Label
 } from "reactstrap";
-
+import InstanceSelector from "../components/InstanceSelector/InstanceSelector"
 function NEH(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [ordre, setOrder] = useState("");
@@ -72,20 +72,7 @@ function NEH(props) {
                   </Col>
                 </Row>
                 <br />
-                <Row>
-                  <Col className="pr-md-1" md="12" >
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                      <DropdownToggle caret>
-                        Choisir une Instance
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem>Foo Action</DropdownItem>
-                        <DropdownItem>Bar Action</DropdownItem>
-                        <DropdownItem>Quo Action</DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  </Col>
-                </Row>
+                <InstanceSelector></InstanceSelector>
                 <br />
                 <Row>
                   <Col className="pr-md-1" md="12">

@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import InstanceSelector from "components/InstanceSelector/InstanceSelector";
 import React, { useState } from "react";
 
 // reactstrap components
@@ -83,21 +84,7 @@ function SA(props) {
                     </p>
                   </Col>
                 </Row>
-                <Row>
-                  <Col className="pr-md-1" md="12">
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                      <DropdownToggle caret>
-                        Choisir une Instance
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem>Foo Action</DropdownItem>
-                        <DropdownItem>Bar Action</DropdownItem>
-                        <DropdownItem>Quo Action</DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  </Col>
-                </Row>
-
+                <InstanceSelector></InstanceSelector>
                 <Row>
                   <Col md="12">
                     <FormGroup>
