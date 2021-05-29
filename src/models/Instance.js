@@ -41,7 +41,7 @@ export default class Instance {
             "id" : this.id,
             "jobs" : this.job_count,
             "machines" : this.machine_count,
-            "instance" : this.processing_times
+            "costs" : this.processing_times
         }
     }
 }

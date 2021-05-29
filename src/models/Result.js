@@ -11,16 +11,16 @@ export class RunResult{
     /**
      * The results returned from execution on instance
      * @param {string} instance_id 
-     * @param {number} method_id 
+     * @param {string} method
      * @param {number} execution_time 
      * @param {number} makespan 
      * @param {number[]} sequence 
      * @param {AdditionalInfo} additional_info 
      */
-    constructor (instance_id,method_id,execution_time,makespan,sequence,additional_info)
+    constructor (instance_id,method,execution_time,makespan,sequence,additional_info)
     {
         this.instance_id = instance_id
-        this.method_id = method_id
+        this.method_id = method
         this.execution_time = execution_time
         this.makespan = makespan
         this.sequence = sequence
