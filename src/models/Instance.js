@@ -1,6 +1,5 @@
 /**
  * Class representing an Instance of the FSP problem
- * @property {number} job_count - propriety description
  * @public
  */
 export default class Instance {
@@ -8,7 +7,15 @@ export default class Instance {
     job_count
     machine_count
     processing_times
+    /**
+     * Instance of the Flow shop permutation problem
+     * @param {string} id 
+     * @param {number} job_count 
+     * @param {number} machine_count 
+     * @param {number[][]} processing_times 
+     */
     constructor(id,job_count,machine_count,processing_times){
+        this.id = id
         this.job_count = job_count;
         this.machine_count = machine_count;
         this.processing_times = processing_times;
@@ -30,13 +37,11 @@ export default class Instance {
     }
 
     toJSON(){
-        return JSON.parse(
-            {
-                "id" : this.id,
-                "jobs" : this.job_count,
-                "machines" : this.machine_count,
-                "instance" : this.processing_times
-            }
-        )
+        return {
+            "id" : this.id,
+            "jobs" : this.job_count,
+            "machines" : this.machine_count,
+            "instance" : this.processing_times
+        }
     }
 }

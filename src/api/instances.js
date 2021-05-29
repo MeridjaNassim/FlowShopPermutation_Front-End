@@ -1,20 +1,20 @@
-import {Axios} from "./middleware"
-import {Instance} from "../models/Instance"
+import {API} from "./middleware"
+import Instance from "../models/Instance"
 import { ALL_INSTANCES_ENDPOINT, INSTANCE_ENDPOINT } from "./endpoint"
 
 export async function getAllInstances()
 {
     try {
-        const res = await Axios.get(ALL_INSTANCES_ENDPOINT)
+        const res = await API.get(ALL_INSTANCES_ENDPOINT)
         const data  = res.data
         if(data["error"])
             throw new Error(data["message"])
         return data["instances"].map((item)=>{
-            return Instance(
+            return new Instance(
                 item["id"],
                 item["jobs"],
                 item["machines"],
-                null
+                item["instance"]
                 )
         })
        } catch (error) {
@@ -24,7 +24,7 @@ export async function getAllInstances()
 }
 export async function getInstance(job_count,machine_count,instance_id){
    try {
-    const res = await Axios.get(INSTANCE_ENDPOINT,{
+    const res = await API.get(INSTANCE_ENDPOINT,{
         params :{
             jobs : job_count,
             machines : machine_count,
