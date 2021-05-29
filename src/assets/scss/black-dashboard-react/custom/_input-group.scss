@@ -264,7 +264,12 @@ textarea.form-control{
         }
     }
 }
-
+.results-dialog{
+    text-align: center;
+}
+.modal-open #root {
+    -webkit-filter: blur(5px) 
+}
 .search-bar{
     margin-left: $margin-lg-vertical;
       .btn{

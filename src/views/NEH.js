@@ -39,7 +39,13 @@ import {
   Label
 } from "reactstrap";
 import InstanceSelector from "../components/InstanceSelector/InstanceSelector"
+import Dialog from "components/Dialog";
+
 function NEH(props) {
+  const toggleModalSearch = () => {
+    setIsOpen(!isOpen);
+  };
+  const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [ordre, setOrder] = useState("");
   const [breaking, setBreaking] = useState(false);
@@ -127,13 +133,20 @@ function NEH(props) {
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit" onClick ={()=> console.log(ordre)}>
+              <Button className="btn-fill" color="primary" type="submit" onClick ={()=> setIsOpen(true)}>
                 Calculer
               </Button>
             </CardFooter>
           </Card>
         </Col>
       </div>
+      <Dialog isOpen= {isOpen} 
+      toggleModalSearch= {toggleModalSearch} 
+      sequence = {"4,5,9,8,5,6,4"}
+      makeSpan = {"720"}
+      executionTime = {"450"}
+      withOtherInfo = {true}
+      ></Dialog>
     </>
   );
 }

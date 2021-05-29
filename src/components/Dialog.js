@@ -5,11 +5,21 @@ import {
     ModalHeader,
     
 } from 'reactstrap';
-export default function Dialog (props) {
+export default function Dialog ({
+  isOpen,
+  toggleModalSearch,
+  executionTime,
+  makeSpan,
+  sequence,
+  withOtherInfo,
+  leafs,
+  exploredNodes,
+  prunnedNodes
+}) {
     return (
         <Modal
         modalClassName="modal-search"
-        isOpen={modalSearch}
+        isOpen={isOpen}
         toggle={toggleModalSearch}
       >
         <ModalHeader>
@@ -28,7 +38,7 @@ export default function Dialog (props) {
                 <div className ='card'>
                     <div className='card-body'>
                       <div className='results-dialog'>
-                        <h2> 37sec </h2>                      
+                        <h2> {executionTime} </h2>                      
                         <h4> Execution time</h4>
                       </div>
                     </div>
@@ -38,7 +48,7 @@ export default function Dialog (props) {
                 <div className ='card'>
                     <div className='card-body'>
                       <div className='results-dialog'>
-                        <h2> 60sec </h2>                      
+                        <h2> {makeSpan} </h2>                      
                         <h4> MakeSpan</h4>
                       </div>
                     </div>
@@ -51,7 +61,7 @@ export default function Dialog (props) {
                 <div className ='card'>
                     <div className='card-body'>
                       <div className='results-dialog'>
-                        <h2> 4,5,6,8,7,9</h2>
+                        <h2> {sequence} </h2>
                         <h4> Sequence </h4>                      
                       </div>
                     </div>
@@ -65,43 +75,50 @@ export default function Dialog (props) {
           >
           </button>
         </ModalBody>
-         <ModalHeader>
-            <h3> Other Information : </h3>
-        </ModalHeader>
-        <ModalBody>
-          <div className='row'>
-              <div className='col-md-4'>
-                  <div className ='card'>
-                      <div className='card-body'>
-                        <div className='results-dialog'>
-                          <h2> 15 </h2>                      
-                          <h4> Leafs</h4>
-                        </div>
+        {
+          withOtherInfo? 
+          <div>
+            <ModalHeader>
+                <h3> Other Information : </h3>
+            </ModalHeader>
+            <ModalBody>
+              <div className='row'>
+                  <div className='col-md-4'>
+                      <div className ='card'>
+                          <div className='card-body'>
+                            <div className='results-dialog'>
+                              <h2> 15 </h2>                      
+                              <h4> Leafs</h4>
+                            </div>
+                          </div>
                       </div>
                   </div>
-              </div>
-              <div className='col-md-4'>
-                  <div className ='card'>
-                      <div className='card-body'>
-                        <div className='results-dialog'>
-                          <h2> 60689</h2>                      
-                          <h4> Explored nodes</h4>
-                        </div>
+                  <div className='col-md-4'>
+                      <div className ='card'>
+                          <div className='card-body'>
+                            <div className='results-dialog'>
+                              <h2> 60689</h2>                      
+                              <h4> Explored nodes</h4>
+                            </div>
+                          </div>
                       </div>
                   </div>
-              </div>
-              <div className='col-md-4'>
-                  <div className ='card'>
-                      <div className='card-body'>
-                        <div className='results-dialog'>
-                          <h2> 478935410</h2>
-                          <h4> Prunned nodes </h4>                      
-                        </div>
+                  <div className='col-md-4'>
+                      <div className ='card'>
+                          <div className='card-body'>
+                            <div className='results-dialog'>
+                              <h2> 478935410</h2>
+                              <h4> Prunned nodes </h4>                      
+                            </div>
+                          </div>
                       </div>
                   </div>
-              </div>
-            </div>  
-        </ModalBody>
+                </div>  
+            </ModalBody>
+        </div>
+        :
+        <div></div>
+        }
       </Modal>
     );
 }
