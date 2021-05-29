@@ -14,6 +14,11 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
  */
+
+ .radio{
+  padding: 2px;
+}
+
 /*     brand Colors              */
 /* navbar color */
 :root {
@@ -1838,7 +1843,7 @@ textarea.form-control {
   user-select: none;
   background-color: transparent;
   border: 1px solid transparent;
-  padding: 11px 40px;
+  padding: 10px 10px;
   font-size: 0.875rem;
   line-height: 1.35em;
   border-radius: 0.25rem;
