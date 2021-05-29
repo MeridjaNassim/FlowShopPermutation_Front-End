@@ -39,6 +39,11 @@ import {
 
 function SA(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [Ti, setTi] = useState("");
+  const [Tf, setTf] = useState("");
+  const [alpha, setAlpha] = useState("");
+  const [nbIteration, setNbIteration] = useState("");
+  const [valInit, setValInit] = useState("");
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   return (
@@ -101,17 +106,19 @@ function SA(props) {
                         defaultValue=""
                         placeholder="Température initiale"
                         type="text"
+                        onChange={(e)=> setTi(e.target.value)}
                       />
                       <label>Température finale</label>
                       <Input
                         defaultValue=""
                         placeholder="Température finale"
                         type="text"
+                        onChange={(e)=> setTf(e.target.value)}
                       />
                       <label>Alpha</label>
-                      <Input defaultValue="" placeholder="Alpha" type="text" />
+                      <Input defaultValue="" placeholder="Alpha" type="text" onChange={(e)=> setAlpha(e.target.value)}/>
                       <label>Nombre d'itérations</label>
-                      <Input defaultValue="" placeholder="Nombre d'itérations" type="text" />
+                      <Input defaultValue="" placeholder="Nombre d'itérations" type="text" onChange={(e)=> setNbIteration(e.target.value)}/>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -120,15 +127,15 @@ function SA(props) {
                   <Col className="pr-md-1" md="12">
                     <ButtonGroup>
                       <Button
-                        color="primary"
-                        // onClick={() => setRSelected(1)}
+                        color= {valInit==="neh"? "success" : "primary"}
+                        onClick={() => setValInit("neh")}
                         // active={rSelected === 1}
                       >
                         NEH
                       </Button>
                       <Button
-                        color="primary"
-                        // onClick={() => setRSelected(2)}
+                        color= {valInit==="cds"? "success" : "primary"}
+                        onClick={() => setValInit("cds")}
                         // active={rSelected === 2}
                       >
                         CDS

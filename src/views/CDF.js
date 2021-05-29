@@ -38,6 +38,19 @@ import {
 } from "reactstrap";
 
 function CDF(props) {
+  const [initValue, setInitValue] = useState("");
+  const [nbFourmis, setNbFourmis] = useState("");
+  const [rho, setRHO] = useState("");
+  const [alpha, setAlpha] = useState("");
+  const [beta, setBeta] = useState("");
+  const [qo, setQo] = useState("");
+  const [infoStrategy, setInfoStrategy] = useState("");
+  const [nbRonds, setNbRonds] = useState("");
+  const [nbThreads, setNbThreads] = useState("");
+  const [localSearch, setLocalSearch] = useState(false);
+  const [localSearchProb, setLocalSearchProb] = useState("");
+  const [nbPremutLocalSearch, setnbPremutLocalSearch] = useState("");
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
@@ -100,21 +113,23 @@ function CDF(props) {
                         defaultValue=""
                         placeholder="Valeur initiale"
                         type="text"
+                        onChange={(e)=> setInitValue(e.target.value)}
                       />
                       <label>Nombre de fourmis</label>
                       <Input
                         defaultValue=""
                         placeholder="Nombre de fourmis"
                         type="text"
+                        onChange={(e)=> setNbFourmis(e.target.value)}
                       />
                       <label>RHO</label>
-                      <Input defaultValue="" placeholder="RHO" type="text" />
+                      <Input defaultValue="" placeholder="RHO" type="text" onChange={(e)=> setRHO(e.target.value)}/>
                       <label>Alpha</label>
-                      <Input defaultValue="" placeholder="Alpha" type="text" />
+                      <Input defaultValue="" placeholder="Alpha" type="text" onChange={(e)=> setAlpha(e.target.value)} />
                       <label>Beta</label>
-                      <Input defaultValue="" placeholder="Beta" type="text" />
+                      <Input defaultValue="" placeholder="Beta" type="text" onChange={(e)=> setBeta(e.target.value)}/>
                       <label>Q0</label>
-                      <Input defaultValue="" placeholder="Q0" type="text" />
+                      <Input defaultValue="" placeholder="Q0" type="text" onChange={(e)=> setQo(e.target.value)}/>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -123,22 +138,22 @@ function CDF(props) {
                   <Col className="pr-md-1" md="12">
                     <ButtonGroup>
                       <Button
-                        color="primary"
-                        // onClick={() => setRSelected(1)}
+                        color= {infoStrategy==="min"? "success" : "primary"}
+                        onClick={() => setInfoStrategy("min")}
                         // active={rSelected === 1}
                       >
                         Min
                       </Button>
                       <Button
-                        color="primary"
-                        // onClick={() => setRSelected(2)}
+                        color= {infoStrategy==="avg"? "success" : "primary"}
+                        onClick={() => setInfoStrategy("avg")}
                         // active={rSelected === 2}
                       >
                         Average
                       </Button>
                       <Button
-                        color="primary"
-                        // onClick={() => setRSelected(2)}
+                        color= {infoStrategy==="max"? "success" : "primary"}
+                        onClick={() => setInfoStrategy("max")}
                         // active={rSelected === 2}
                       >
                         Max
@@ -153,27 +168,33 @@ function CDF(props) {
                     defaultValue=""
                     placeholder="Nombre de ronds"
                     type="text"
+                    onChange={(e)=> setNbRonds(e.target.value)}
                   />
                   <label>Nombre de threads</label>
                   <Input
                     defaultValue=""
                     placeholder="Nombre de threads"
                     type="text"
+                    onChange={(e)=> setNbThreads(e.target.value)}
                   />
                   <Button
-                    color="primary"
-                    // onClick={() => setRSelected(2)}
+                        color= {localSearch? "success" : "primary"}
+                        onClick={() => setLocalSearch(!localSearch)}
                     // active={rSelected === 2}
                   >
                     Local Search
                   </Button>
                   <br />
                   <br />
+                  {
+                    localSearch ? 
+                  <div>
                   <label>Local Search Probabilité</label>
                   <Input
                     defaultValue=""
                     placeholder="Local Search Probabilité"
                     type="text"
+                    onChange={(e)=> setLocalSearch(e.target.value)}
                   />
 
                   <label>
@@ -183,7 +204,12 @@ function CDF(props) {
                     defaultValue=""
                     placeholder="Nombre de permutations pour local search"
                     type="text"
+                    onChange={(e)=> setnbPremutLocalSearch(e.target.value)}
                   />
+                  </div>
+                  : 
+                  <div></div>
+                }
                 </FormGroup>
               </Form>
             </CardBody>

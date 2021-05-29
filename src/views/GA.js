@@ -39,6 +39,10 @@ import {
 
 function GA(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [taillePoulation, setTaillePopulation] = useState("");
+  const [nbGen, setNbGen] = useState("");
+  const [pc, setPc] = useState("");
+  const [pm, setPm] = useState("");
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   return (
@@ -96,24 +100,26 @@ function GA(props) {
                         defaultValue=""
                         placeholder="Taille de la population"
                         type="text"
+                        onChange={(e)=> setTaillePopulation(e.target.value)}
                       />
                       <label>Nombre de génerations</label>
                       <Input
                         defaultValue=""
                         placeholder="Nombre de génerations"
                         type="text"
+                        onChange={(e)=> setNbGen(e.target.value)}
                       />
                       <label>Pc</label>
-                      <Input defaultValue="" placeholder="Pc" type="text" />
+                      <Input defaultValue="" placeholder="Pc" type="text" onChange={(e)=> setPc(e.target.value)}/>
                       <label>Pm</label>
-                      <Input defaultValue="" placeholder="Pm" type="text" />
+                      <Input defaultValue="" placeholder="Pm" type="text" onChange={(e)=> setPm(e.target.value)}/>
                     </FormGroup>
                   </Col>
                 </Row>
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit">
+              <Button className="btn-fill" color="primary" type="submit" onClick ={()=> console.log(pm)}>
                 Calculer
               </Button>
             </CardFooter>

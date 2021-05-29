@@ -41,7 +41,9 @@ import {
 
 function Branch_and_Bound(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [strategy, setStrategy] = useState(-1);
+  const [initValue, setInitValue] = useState(false);
+  const [parallel, setParallel] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const [DFS, setDFS] = useState(false);
   //const[DFS,setDFS]=useState(False);
@@ -100,8 +102,8 @@ function Branch_and_Bound(props) {
                   <ButtonGroup>
                     <Button
                     className="radioCheck"
-                      color="primary"
-                      onClick={() => setDFS(true)}
+                    color= {strategy===1? "success" : "primary"}
+                    onClick={() => setStrategy(1)}
                       //active={rSelected === 1}
                     >
                       Depth First Search
@@ -109,8 +111,8 @@ function Branch_and_Bound(props) {
                 
                     <Button
                       className="radioCheck"
-                      color="primary"
-                      // onClick={() => setRSelected(2)}
+                      color= {strategy===0? "success" : "primary"}
+                      onClick={() => setStrategy(0)}
                       // active={rSelected === 2}
                     >
                       Best First Search
@@ -120,8 +122,8 @@ function Branch_and_Bound(props) {
                 </Row>
 
                 <Button
-                  color="primary"
-                  // onClick={() => setRSelected(1)}
+                        color= {initValue? "success" : "primary"}
+                        onClick={() => setInitValue(!initValue)}
                   // active={rSelected === 1}
                 >
                   Initialisation avec heuristique
@@ -132,8 +134,8 @@ function Branch_and_Bound(props) {
               <Row>
               <Col className="pr-md-1" md="12">
               <Button
-                  color="primary"
-                  // onClick={() => setRSelected(1)}
+                        color= {parallel? "success" : "primary"}
+                        onClick={() => setParallel(!parallel)}
                   // active={rSelected === 1}
                 >
                   Log

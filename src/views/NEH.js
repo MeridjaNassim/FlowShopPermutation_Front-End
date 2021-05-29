@@ -36,10 +36,13 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Label
 } from "reactstrap";
 
 function NEH(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [ordre, setOrder] = useState("");
+  const [breaking, setBreaking] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   return (
     <>
@@ -90,8 +93,8 @@ function NEH(props) {
                     <ButtonGroup>
                       <Button
                          size="sm"
-                        color="primary"
-                        // onClick={() => setRSelected(1)}
+                        color= {ordre==="dec"? "success" : "primary"}
+                        onClick={() => setOrder("dec")}
                         // active={rSelected === 1}
                       >
                         Décroissant
@@ -99,24 +102,24 @@ function NEH(props) {
                       <Button 
                       size="sm"
                        
-                        color="primary"
-                        // onClick={() => setRSelected(2)}
+                      color= {ordre==="croi"? "success" : "primary"}
+                      onClick={() => setOrder("croi")}
                         // active={rSelected === 2}
                       >
                         Croissant
                       </Button>
                       <Button
                          size="sm"
-                        color="primary"
-                        // onClick={() => setRSelected(2)}
+                         color= {ordre==="ale"? "success" : "primary"}
+                         onClick={() => setOrder("ale")}
                         // active={rSelected === 2}
                       >
                         Aléatoire
                       </Button>
                       <Button
                         size="sm"
-                        color="primary"
-                        // onClick={() => setRSelected(2)}
+                        color= {ordre==="moyEcart"? "success" : "primary"}
+                        onClick={() => setOrder("moyEcart")}
                         // active={rSelected === 2}
                       >
                         Moyenne et écart type
@@ -127,8 +130,8 @@ function NEH(props) {
 
                
                   <Button
-                    color="primary"
-                    // onClick={() => setRSelected(1)}
+                        color= {breaking? "success" : "primary"}
+                        onClick={() => setBreaking(!breaking)}
                     // active={rSelected === 1}
                   >
                     Tie Breaking Mechanism
@@ -137,7 +140,7 @@ function NEH(props) {
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit">
+              <Button className="btn-fill" color="primary" type="submit" onClick ={()=> console.log(ordre)}>
                 Calculer
               </Button>
             </CardFooter>
