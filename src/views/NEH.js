@@ -40,7 +40,8 @@ import {
 } from "reactstrap";
 import InstanceSelector from "../components/InstanceSelector/InstanceSelector"
 import Dialog from "components/Dialog";
-
+import Run from "components/Run/Run";
+import {NEH as neh} from "../constants/methods"
 function NEH(props) {
   const toggleModalSearch = () => {
     setIsOpen(!isOpen);
@@ -50,7 +51,10 @@ function NEH(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [ordre, setOrder] = useState("");
   const [breaking, setBreaking] = useState(false);
+  const [dialog, setDialog] = useState(false)
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const [result, setResult] = useState(null)
+  const toggleDialog = ()=>setDialog(!dialog)
   return (
     <>
       <div className="content">
@@ -91,8 +95,8 @@ function NEH(props) {
                     <ButtonGroup>
                       <Button
                          size="sm"
-                        color= {ordre==="dec"? "success" : "primary"}
-                        onClick={() => setOrder("dec")}
+                        color= {ordre==="D"? "success" : "primary"}
+                        onClick={() => setOrder("D")}
                         // active={rSelected === 1}
                       >
                         Décroissant
@@ -100,24 +104,24 @@ function NEH(props) {
                       <Button 
                       size="sm"
                        
-                      color= {ordre==="croi"? "success" : "primary"}
-                      onClick={() => setOrder("croi")}
+                      color= {ordre==="SD"? "success" : "primary"}
+                      onClick={() => setOrder("SD")}
                         // active={rSelected === 2}
                       >
                         Croissant
                       </Button>
                       <Button
                          size="sm"
-                         color= {ordre==="ale"? "success" : "primary"}
-                         onClick={() => setOrder("ale")}
+                         color= {ordre==="RD"? "success" : "primary"}
+                         onClick={() => setOrder("RD")}
                         // active={rSelected === 2}
                       >
                         Aléatoire
                       </Button>
                       <Button
                         size="sm"
-                        color= {ordre==="moyEcart"? "success" : "primary"}
-                        onClick={() => setOrder("moyEcart")}
+                        color= {ordre==="AV"? "success" : "primary"}
+                        onClick={() => setOrder("AV")}
                         // active={rSelected === 2}
                       >
                         Moyenne et écart type
@@ -138,20 +142,32 @@ function NEH(props) {
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit" onClick ={()=> setIsOpen(true)}>
-                Calculer
-              </Button>
+            <Run
+                instance={instance}
+                params={{
+                  order_jobs : ordre,
+                  tie_breaking : breaking
+                }}
+                method_id={neh}
+                onComplete={(res)=>{
+                  setResult(res)
+                  console.log(res);
+                  setDialog(true)
+                }}
+              ></Run>
             </CardFooter>
           </Card>
         </Col>
       </div>
-      <Dialog isOpen= {isOpen} 
-      toggleModalSearch= {toggleModalSearch} 
-      sequence = {"4,5,9,8,5,6,4"}
-      makeSpan = {"720"}
-      executionTime = {"450"}
-      withOtherInfo = {false}
-      ></Dialog>
+      <Dialog
+          method="NEH"
+          isOpen={dialog}
+          toggleModalSearch={toggleDialog}
+          sequence={result?.sequence}
+          makeSpan={result?.makespan}
+          executionTime={result?.execution_time}
+          withOtherInfo={false}
+        ></Dialog>
     </>
   );
 }

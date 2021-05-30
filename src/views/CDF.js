@@ -16,6 +16,7 @@
 
 */
 import InstanceSelector from "components/InstanceSelector/InstanceSelector";
+import Run from "components/Run/Run";
 import React, { useState } from "react";
 
 // reactstrap components
@@ -37,24 +38,30 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import Dialog from "components/Dialog";
+import { ANT_COLONY_OPTIMIZATION } from "constants/methods";
 
 function CDF(props) {
-  const [initValue, setInitValue] = useState("");
-  const [nbFourmis, setNbFourmis] = useState("");
-  const [rho, setRHO] = useState("");
-  const [alpha, setAlpha] = useState("");
-  const [beta, setBeta] = useState("");
-  const [qo, setQo] = useState("");
-  const [infoStrategy, setInfoStrategy] = useState("");
-  const [nbRonds, setNbRonds] = useState("");
-  const [nbThreads, setNbThreads] = useState("");
+  const [initValue, setInitValue] = useState(10**(-6));
+  const [nbFourmis, setNbFourmis] = useState(5);
+  const [rho, setRHO] = useState(0.01);
+  const [alpha, setAlpha] = useState(1);
+  const [beta, setBeta] = useState(0.0001);
+  const [qo, setQo] = useState(0.97);
+  const [result, setResult] = useState(null)
+  const [parallel, setParallel] = useState(false);
+  
+  const [infoStrategy, setInfoStrategy] = useState("min");
+  const [nbRonds, setNbRonds] = useState(50);
+  const [nbThreads, setNbThreads] = useState(4);
   const [localSearch, setLocalSearch] = useState(false);
-  const [localSearchProb, setLocalSearchProb] = useState("");
-  const [nbPremutLocalSearch, setnbPremutLocalSearch] = useState("");
+  const [localSearchProb, setLocalSearchProb] = useState(0.02);
+  const [nbPremutLocalSearch, setnbPremutLocalSearch] = useState(3);
   const [instance,setInstance] = useState(null)
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dialog, setDialog] = useState(false)
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-
+  const toggleDialog = ()=>setDialog(!dialog)
   //const[DFS,setDFS]=useState(False);
   return (
     <>
@@ -105,23 +112,23 @@ function CDF(props) {
                         defaultValue=""
                         placeholder="Valeur initiale"
                         type="text"
-                        onChange={(e)=> setInitValue(e.target.value)}
+                        onChange={(e)=> setInitValue(Number(e.target.value))}
                       />
                       <label>Nombre de fourmis</label>
                       <Input
                         defaultValue=""
                         placeholder="Nombre de fourmis"
                         type="text"
-                        onChange={(e)=> setNbFourmis(e.target.value)}
+                        onChange={(e)=> setNbFourmis(Number(e.target.value))}
                       />
                       <label>RHO</label>
-                      <Input defaultValue="" placeholder="RHO" type="text" onChange={(e)=> setRHO(e.target.value)}/>
+                      <Input defaultValue="" placeholder="RHO" type="text" onChange={(e)=> setRHO(Number(e.target.value))}/>
                       <label>Alpha</label>
-                      <Input defaultValue="" placeholder="Alpha" type="text" onChange={(e)=> setAlpha(e.target.value)} />
+                      <Input defaultValue="" placeholder="Alpha" type="text" onChange={(e)=> setAlpha(Number(e.target.value))} />
                       <label>Beta</label>
-                      <Input defaultValue="" placeholder="Beta" type="text" onChange={(e)=> setBeta(e.target.value)}/>
+                      <Input defaultValue="" placeholder="Beta" type="text" onChange={(e)=> setBeta(Number(e.target.value))}/>
                       <label>Q0</label>
-                      <Input defaultValue="" placeholder="Q0" type="text" onChange={(e)=> setQo(e.target.value)}/>
+                      <Input defaultValue="" placeholder="Q0" type="text" onChange={(e)=> setQo(Number(e.target.value))}/>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -151,6 +158,13 @@ function CDF(props) {
                         Max
                       </Button>
                     </ButtonGroup>
+                    <Button
+                        color= {parallel===true? "success" : "primary"}
+                        onClick={() => setParallel(!parallel)}
+                        // active={rSelected === 1}
+                      >
+                        Paralel
+                      </Button>
                   </Col>
                 </Row>
 
@@ -160,14 +174,14 @@ function CDF(props) {
                     defaultValue=""
                     placeholder="Nombre de ronds"
                     type="text"
-                    onChange={(e)=> setNbRonds(e.target.value)}
+                    onChange={(e)=> setNbRonds(Number(e.target.value))}
                   />
                   <label>Nombre de threads</label>
                   <Input
                     defaultValue=""
                     placeholder="Nombre de threads"
                     type="text"
-                    onChange={(e)=> setNbThreads(e.target.value)}
+                    onChange={(e)=> setNbThreads(Number(e.target.value))}
                   />
                   <Button
                         color= {localSearch? "success" : "primary"}
@@ -196,7 +210,7 @@ function CDF(props) {
                     defaultValue=""
                     placeholder="Nombre de permutations pour local search"
                     type="text"
-                    onChange={(e)=> setnbPremutLocalSearch(e.target.value)}
+                    onChange={(e)=> setnbPremutLocalSearch(Number(e.target.value))}
                   />
                   </div>
                   : 
@@ -206,12 +220,43 @@ function CDF(props) {
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit">
-                Calculer
-              </Button>
+            <Run
+                instance={instance}
+                params={{
+                 initValue: initValue,
+                 nbAnts : nbFourmis,
+                 rho : rho,
+                 alpha : alpha,
+                 beta : beta,
+                 q0 : qo,
+                 heuristic_info_strategy : infoStrategy,
+                 nb_rounds : nbRonds,
+                 parallel : parallel,
+                 threads : nbThreads,
+                 local_search : localSearch,
+                 local_search_proba : localSearchProb,
+                 local_search_nb_permutation : nbPremutLocalSearch
+
+                }}
+                method_id={ANT_COLONY_OPTIMIZATION}
+                onComplete={(res)=>{
+                  setResult(res)
+                  console.log(res);
+                  setDialog(true)
+                }}
+              ></Run>
             </CardFooter>
           </Card>
         </Col>
+        <Dialog
+        method="Ant Colony Optimization"
+          isOpen={dialog}
+          toggleModalSearch={toggleDialog}
+          sequence={result?.sequence}
+          makeSpan={result?.makespan}
+          executionTime={result?.execution_time}
+          withOtherInfo={false}
+        ></Dialog>
       </div>
     </>
   );

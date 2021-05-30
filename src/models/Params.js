@@ -50,7 +50,7 @@ export class NEHParams extends Params{
     constructor(tie_breaking=false,order_jobs="RD"){
         super()
         super.add("tie_breaking",tie_breaking)
-        super.add("order_jobs",order_jobs)
+        super.add("jobs_order",order_jobs)
      }
 }
 export class CDSParams extends Params{

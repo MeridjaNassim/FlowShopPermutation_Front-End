@@ -171,12 +171,13 @@ function Branch_and_Bound(props) {
           </Card>
         </Col>
         <Dialog
+        method="Branch and bound"
           isOpen={dialog}
           toggleModalSearch={toggleDialog}
           sequence={result?.sequence}
           makeSpan={result?.makespan}
           executionTime={result?.execution_time}
-          withOtherInfo={true}
+          withOtherInfo={false}
         ></Dialog>
       </div>
     </>

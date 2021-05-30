@@ -15,8 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import Run from "components/Run/Run";
 import React, {useState} from "react";
-
+import {CDS as cds} from "../constants/methods"
+import Dialog from "components/Dialog";
 // reactstrap components
 import {
   Button,
@@ -40,7 +42,10 @@ import InstanceSelector from "../components/InstanceSelector/InstanceSelector"
 function CDS(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [instance,setInstance] = useState(null)
+    const [dialog, setDialog] = useState(false)
     const toggle = () => setDropdownOpen((prevState) => !prevState);
+    const [result, setResult] = useState(null)
+    const toggleDialog = ()=>setDialog(!dialog)
   return (
     <>
       <div className="content">
@@ -69,12 +74,29 @@ function CDS(props) {
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit">
-                Calculer
-              </Button>
+            <Run
+                instance={instance}
+                params={{
+                }}
+                method_id={cds}
+                onComplete={(res)=>{
+                  setResult(res)
+                  console.log(res);
+                  setDialog(true)
+                }}
+              ></Run>
             </CardFooter>
           </Card>
         </Col>
+        <Dialog
+        method="CDS"
+          isOpen={dialog}
+          toggleModalSearch={toggleDialog}
+          sequence={result?.sequence}
+          makeSpan={result?.makespan}
+          executionTime={result?.execution_time}
+          withOtherInfo={false}
+        ></Dialog>
       </div>
     </>
   );

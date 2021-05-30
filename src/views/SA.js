@@ -16,6 +16,8 @@
 
 */
 import InstanceSelector from "components/InstanceSelector/InstanceSelector";
+import Run from "components/Run/Run";
+import { SIMULATED_ANNEALING } from "constants/methods";
 import React, { useState } from "react";
 
 // reactstrap components
@@ -37,17 +39,19 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
+import Dialog from "components/Dialog";
 function SA(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [Ti, setTi] = useState("");
-  const [Tf, setTf] = useState("");
-  const [alpha, setAlpha] = useState("");
+  const [Ti, setTi] = useState(200);
+  const [Tf, setTf] = useState(0.01);
+  const [alpha, setAlpha] = useState(0.93);
   const [instance,setInstance] = useState(null)
-  const [nbIteration, setNbIteration] = useState("");
-  const [valInit, setValInit] = useState("");
-
+  const [nbIteration, setNbIteration] = useState(10);
+  const [valInit, setValInit] = useState("CDS");
+  const [dialog, setDialog] = useState(false)
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const [result, setResult] = useState(null)
+  const toggleDialog = ()=>setDialog(!dialog)
   return (
     <>
       <div className="content">
@@ -98,19 +102,19 @@ function SA(props) {
                         defaultValue=""
                         placeholder="Température initiale"
                         type="text"
-                        onChange={(e)=> setTi(e.target.value)}
+                        onChange={(e)=> setTi(Number(e.target.value))}
                       />
                       <label>Température finale</label>
                       <Input
                         defaultValue=""
                         placeholder="Température finale"
                         type="text"
-                        onChange={(e)=> setTf(e.target.value)}
+                        onChange={(e)=> setTf(Number(e.target.value))}
                       />
                       <label>Alpha</label>
-                      <Input defaultValue="" placeholder="Alpha" type="text" onChange={(e)=> setAlpha(e.target.value)}/>
+                      <Input defaultValue="" placeholder="Alpha" type="text" onChange={(e)=> setAlpha(Number(e.target.value))}/>
                       <label>Nombre d'itérations</label>
-                      <Input defaultValue="" placeholder="Nombre d'itérations" type="text" onChange={(e)=> setNbIteration(e.target.value)}/>
+                      <Input defaultValue="" placeholder="Nombre d'itérations" type="text" onChange={(e)=> setNbIteration(Number(e.target.value))}/>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -120,14 +124,14 @@ function SA(props) {
                     <ButtonGroup>
                       <Button
                         color= {valInit==="neh"? "success" : "primary"}
-                        onClick={() => setValInit("neh")}
+                        onClick={() => setValInit("NEH")}
                         // active={rSelected === 1}
                       >
                         NEH
                       </Button>
                       <Button
                         color= {valInit==="cds"? "success" : "primary"}
-                        onClick={() => setValInit("cds")}
+                        onClick={() => setValInit("CDS")}
                         // active={rSelected === 2}
                       >
                         CDS
@@ -138,12 +142,34 @@ function SA(props) {
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit">
-                Calculer
-              </Button>
+            <Run
+                instance={instance}
+                params={{
+                  Ti: Ti,
+                  Tf: Tf,
+                  alpha: alpha,
+                  valInit: valInit,
+                  nbIteration : nbIteration,
+                }}
+                method_id={SIMULATED_ANNEALING}
+                onComplete={(res)=>{
+                  setResult(res)
+                  console.log(res);
+                  setDialog(true)
+                }}
+              ></Run>
             </CardFooter>
           </Card>
         </Col>
+        <Dialog
+        method="Simulated Annealing"
+          isOpen={dialog}
+          toggleModalSearch={toggleDialog}
+          sequence={result?.sequence}
+          makeSpan={result?.makespan}
+          executionTime={result?.execution_time}
+          withOtherInfo={false}
+        ></Dialog>
       </div>
     </>
   );

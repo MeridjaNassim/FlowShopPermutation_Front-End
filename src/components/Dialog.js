@@ -6,6 +6,7 @@ import {
     
 } from 'reactstrap';
 export default function Dialog ({
+  method,
   isOpen,
   toggleModalSearch,
   executionTime,
@@ -24,7 +25,7 @@ export default function Dialog ({
         color="primary"
       >
         <ModalHeader>
-              <h3 className='results-dialog'> Method : NEH </h3>
+              <h3 className='results-dialog'> Method : {method} </h3>
           <button
             aria-label="Close"
             className="close"
@@ -39,8 +40,8 @@ export default function Dialog ({
                 <div className ='card'>
                     <div className='card-body'>
                       <div className='results-dialog'>
-                        <h2> {executionTime} </h2>                      
-                        <h4> Execution time</h4>
+                        <h2 style={{fontSize: 30,fontWeight :"bold"}}> {executionTime} </h2>                      
+                        <h4> Execution time (s)</h4>
                       </div>
                     </div>
                 </div>
@@ -49,7 +50,7 @@ export default function Dialog ({
                 <div className ='card'>
                     <div className='card-body'>
                       <div className='results-dialog'>
-                        <h2> {makeSpan} </h2>                      
+                        <h2 style={{fontSize: 30,fontWeight :"bold"}}> {makeSpan} </h2>                      
                         <h4> MakeSpan</h4>
                       </div>
                     </div>
@@ -71,7 +72,7 @@ export default function Dialog ({
                           justifyContent : "center",
                           alignItems : "center"
                         }}> 
-                          {sequence?.map(s => <li
+                          {(sequence != undefined) && sequence.map(s => <li
                           
                           style={{
                             flex: 1,

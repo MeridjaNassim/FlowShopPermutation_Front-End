@@ -15,6 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import Run from "components/Run/Run";
+import { GENETIC_ALGORITHM } from "constants/methods";
 import React, {useState} from "react";
 
 // reactstrap components
@@ -36,16 +38,20 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import Dialog from "components/Dialog";
 import InstanceSelector from "../components/InstanceSelector/InstanceSelector"
 function GA(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [taillePoulation, setTaillePopulation] = useState("");
-  const [nbGen, setNbGen] = useState("");
-  const [pc, setPc] = useState("");
-  const [pm, setPm] = useState("");
+  const [taillePoulation, setTaillePopulation] = useState(12);
+  const [nbGen, setNbGen] = useState(70);
+  const [pc, setPc] = useState(0.9);
+  const [pm, setPm] = useState(0.06);
   const [instance,setInstance] = useState(null)
-
+  const [dialog, setDialog] = useState(false)
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const [result, setResult] = useState(null)
+  const toggleDialog = ()=>setDialog(!dialog)
+  
   return (
     <>
       <div className="content">
@@ -92,32 +98,54 @@ function GA(props) {
                         defaultValue=""
                         placeholder="Taille de la population"
                         type="text"
-                        onChange={(e)=> setTaillePopulation(e.target.value)}
+                        onChange={(e)=> setTaillePopulation(Number(e.target.value))}
                       />
                       <label>Nombre de génerations</label>
                       <Input
                         defaultValue=""
                         placeholder="Nombre de génerations"
                         type="text"
-                        onChange={(e)=> setNbGen(e.target.value)}
+                        onChange={(e)=> setNbGen(Number(e.target.value))}
                       />
                       <label>Pc</label>
-                      <Input defaultValue="" placeholder="Pc" type="text" onChange={(e)=> setPc(e.target.value)}/>
+                      <Input defaultValue="" placeholder="Pc" type="text" onChange={(e)=> setPc(Number(e.target.value))}/>
                       <label>Pm</label>
-                      <Input defaultValue="" placeholder="Pm" type="text" onChange={(e)=> setPm(e.target.value)}/>
+                      <Input defaultValue="" placeholder="Pm" type="text" onChange={(e)=> setPm(Number(e.target.value) )}/>
                     </FormGroup>
                   </Col>
                 </Row>
               </Form>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit" onClick ={()=> console.log(pm)}>
-                Calculer
-              </Button>
+            <Run
+                instance={instance}
+                params={{
+                  taillePoulation,
+                  nbGen,
+                  pc,
+                  pm,
+                  }}
+                method_id={GENETIC_ALGORITHM}
+                onComplete={(res)=>{
+                  setResult(res)
+                  console.log(res);
+                  setDialog(true)
+                }}
+              ></Run>
             </CardFooter>
           </Card>
         </Col>
+        <Dialog
+        method="Genetic Algorithm"
+          isOpen={dialog}
+          toggleModalSearch={toggleDialog}
+          sequence={result?.sequence}
+          makeSpan={result?.makespan}
+          executionTime={result?.execution_time}
+          withOtherInfo={false}
+        ></Dialog>
       </div>
+      
     </>
   );
 }
