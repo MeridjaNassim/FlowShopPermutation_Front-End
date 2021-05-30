@@ -21,6 +21,7 @@ export default function Dialog ({
         modalClassName="modal-search"
         isOpen={isOpen}
         toggle={toggleModalSearch}
+        color="primary"
       >
         <ModalHeader>
               <h3 className='results-dialog'> Method : NEH </h3>
@@ -61,7 +62,27 @@ export default function Dialog ({
                 <div className ='card'>
                     <div className='card-body'>
                       <div className='results-dialog'>
-                        <h2> {sequence} </h2>
+                        <ul style={{
+                          listStyle : "none",
+                          display: "flex",
+                          margin: "auto",
+                          flexDirection : "row",
+                          width: "60%",
+                          justifyContent : "center",
+                          alignItems : "center"
+                        }}> 
+                          {sequence?.map(s => <li
+                          
+                          style={{
+                            flex: 1,
+                            background: "orange",
+                            padding: 5,
+                            borderRadius : 5,
+                            margin: 5
+                          }}
+                          
+                          >{s}</li>)}
+                           </ul>
                         <h4> Sequence </h4>                      
                       </div>
                     </div>

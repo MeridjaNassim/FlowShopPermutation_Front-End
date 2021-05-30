@@ -17,7 +17,7 @@
 */
 import React, { useState } from "react";
 
-import "../assets/css/FSP.css"
+import "../assets/css/FSP.css";
 
 // reactstrap components
 import {
@@ -40,14 +40,20 @@ import {
   DropdownItem,
 } from "reactstrap";
 import InstanceSelector from "components/InstanceSelector/InstanceSelector";
-
+import Run from "components/Run/Run";
+import { BRANCH_AND_BOUND } from "../constants/methods";
+import { BranchAndBoundParams } from "models/Params";
+import Dialog from "components/Dialog";
 function Branch_and_Bound(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [strategy, setStrategy] = useState(-1);
+  const [strategy, setStrategy] = useState(1);
+  const [instance, setInstance] = useState(null);
   const [initValue, setInitValue] = useState(false);
   const [parallel, setParallel] = useState(false);
+  const [dialog, setDialog] = useState(false)
+  const [result, setResult] = useState(null)
+  const toggleDialog = ()=>setDialog(!dialog)
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const [DFS, setDFS] = useState(false);
   //const[DFS,setDFS]=useState(False);
   return (
     <>
@@ -82,7 +88,11 @@ function Branch_and_Bound(props) {
                     </p>
                   </Col>
                 </Row>
-               <InstanceSelector></InstanceSelector>
+                <InstanceSelector
+                  onInstanceSelected={(instance) => {
+                    setInstance(instance);
+                  }}
+                ></InstanceSelector>
                 {/* <h2 className="title">Upload instance</h2>
                 <Row>
                   <Col md="12">
@@ -92,64 +102,82 @@ function Branch_and_Bound(props) {
                 </Button>
                   </Col>
                 </Row> */}
-                <br/>
+                <br />
                 <h5 className="pr-md-1" className="title">
-                    Search Strategy
-                  </h5>
+                  Search Strategy
+                </h5>
                 <Row>
-                
-                <Col className="pr-md-1" md="12">
-                  <ButtonGroup>
-                    <Button
-                    className="radioCheck"
-                    color= {strategy===1? "success" : "primary"}
-                    onClick={() => setStrategy(1)}
-                      //active={rSelected === 1}
-                    >
-                      Depth First Search
-                    </Button>
-                
-                    <Button
-                      className="radioCheck"
-                      color= {strategy===0? "success" : "primary"}
-                      onClick={() => setStrategy(0)}
-                      // active={rSelected === 2}
-                    >
-                      Best First Search
-                    </Button>
-                  </ButtonGroup>
+                  <Col className="pr-md-1" md="12">
+                    <ButtonGroup>
+                      <Button
+                        className="radioCheck"
+                        color={strategy === 1 ? "success" : "primary"}
+                        onClick={() => {
+                          setStrategy(1);
+                        }}
+                        //active={rSelected === 1}
+                      >
+                        Depth First Search
+                      </Button>
+
+                      <Button
+                        className="radioCheck"
+                        color={strategy === 0 ? "success" : "primary"}
+                        onClick={() => setStrategy(0)}
+                        // active={rSelected === 2}
+                      >
+                        Best First Search
+                      </Button>
+                    </ButtonGroup>
                   </Col>
                 </Row>
 
                 <Button
-                        color= {initValue? "success" : "primary"}
-                        onClick={() => setInitValue(!initValue)}
+                  color={initValue ? "success" : "primary"}
+                  onClick={() => setInitValue(!initValue)}
                   // active={rSelected === 1}
                 >
                   Initialisation avec heuristique
                 </Button>
-                
-                
               </Form>
               <Row>
-              <Col className="pr-md-1" md="12">
-              <Button
-                        color= {parallel? "success" : "primary"}
-                        onClick={() => setParallel(!parallel)}
-                  // active={rSelected === 1}
-                >
-                  Run in Parallel
-                </Button>
+                <Col className="pr-md-1" md="12">
+                  <Button
+                    color={parallel ? "success" : "primary"}
+                    onClick={() => setParallel(!parallel)}
+                    // active={rSelected === 1}
+                  >
+                    Run in Parallel
+                  </Button>
                 </Col>
               </Row>
             </CardBody>
             <CardFooter>
-              <Button className="btn-fill" color="primary" type="submit">
-                Calculer
-              </Button>
+              <Run
+                instance={instance}
+                params={{
+                  strategy_id: strategy,
+                  parallel: parallel,
+                  use_heuristique: initValue,
+                }}
+                method_id={BRANCH_AND_BOUND}
+                onComplete={(res)=>{
+                  setResult(res)
+                  console.log(res);
+                  setDialog(true)
+                }}
+              ></Run>
             </CardFooter>
           </Card>
         </Col>
+        <Dialog
+          isOpen={dialog}
+          toggleModalSearch={toggleDialog}
+          sequence={result?.sequence}
+          makeSpan={result?.makespan}
+          executionTime={result?.execution_time}
+          withOtherInfo={true}
+        ></Dialog>
       </div>
     </>
   );

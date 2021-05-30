@@ -51,7 +51,7 @@ function CDF(props) {
   const [localSearch, setLocalSearch] = useState(false);
   const [localSearchProb, setLocalSearchProb] = useState("");
   const [nbPremutLocalSearch, setnbPremutLocalSearch] = useState("");
-
+  const [instance,setInstance] = useState(null)
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
@@ -91,7 +91,11 @@ function CDF(props) {
                   </Col>
                 </Row>
 
-               <InstanceSelector></InstanceSelector>
+                <InstanceSelector onInstanceSelected={
+                 (instance)=>{
+                  setInstance(instance)
+                 }
+               }></InstanceSelector>
                 <br />
                 <Row>
                   <Col md="12">

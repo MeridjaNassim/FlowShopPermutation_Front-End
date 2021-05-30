@@ -43,6 +43,7 @@ function GA(props) {
   const [nbGen, setNbGen] = useState("");
   const [pc, setPc] = useState("");
   const [pm, setPm] = useState("");
+  const [instance,setInstance] = useState(null)
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   return (
@@ -77,7 +78,11 @@ function GA(props) {
                     </p>
                   </Col>
                 </Row>
-               <InstanceSelector></InstanceSelector>
+                <InstanceSelector onInstanceSelected={
+                 (instance)=>{
+                  setInstance(instance)
+                 }
+               }></InstanceSelector>
 
                 <Row>
                   <Col md="12">

@@ -45,6 +45,7 @@ function NEH(props) {
   const toggleModalSearch = () => {
     setIsOpen(!isOpen);
   };
+  const [instance,setInstance] = useState(null)
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [ordre, setOrder] = useState("");
@@ -78,7 +79,11 @@ function NEH(props) {
                   </Col>
                 </Row>
                 <br />
-                <InstanceSelector></InstanceSelector>
+                <InstanceSelector onInstanceSelected={
+                 (instance)=>{
+                  setInstance(instance)
+                 }
+               }></InstanceSelector>
                 <br />
                 <Row>
                   <Col className="pr-md-1" md="12">
@@ -145,7 +150,7 @@ function NEH(props) {
       sequence = {"4,5,9,8,5,6,4"}
       makeSpan = {"720"}
       executionTime = {"450"}
-      withOtherInfo = {true}
+      withOtherInfo = {false}
       ></Dialog>
     </>
   );

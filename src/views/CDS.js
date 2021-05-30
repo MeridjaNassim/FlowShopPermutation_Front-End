@@ -39,7 +39,7 @@ import {
 import InstanceSelector from "../components/InstanceSelector/InstanceSelector"
 function CDS(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
+    const [instance,setInstance] = useState(null)
     const toggle = () => setDropdownOpen((prevState) => !prevState);
   return (
     <>
@@ -60,7 +60,11 @@ function CDS(props) {
                     </p>
                   </Col>
                 </Row>
-                <InstanceSelector></InstanceSelector>
+                <InstanceSelector onInstanceSelected={
+                 (instance)=>{
+                  setInstance(instance)
+                 }
+               }></InstanceSelector>
                 
               </Form>
             </CardBody>

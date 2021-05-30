@@ -43,6 +43,7 @@ function SA(props) {
   const [Ti, setTi] = useState("");
   const [Tf, setTf] = useState("");
   const [alpha, setAlpha] = useState("");
+  const [instance,setInstance] = useState(null)
   const [nbIteration, setNbIteration] = useState("");
   const [valInit, setValInit] = useState("");
 
@@ -84,7 +85,11 @@ function SA(props) {
                     </p>
                   </Col>
                 </Row>
-                <InstanceSelector></InstanceSelector>
+                <InstanceSelector onInstanceSelected={
+                 (instance)=>{
+                  setInstance(instance)
+                 }
+               }></InstanceSelector>
                 <Row>
                   <Col md="12">
                     <FormGroup>

@@ -44,6 +44,7 @@ function InstanceSelector({onInstanceSelected}) {
   const setInstanceById = (id)=>{
       const instance = instances?.find((val)=> val.id === id)
       setInstance(instance)
+      onInstanceSelected(instance)
   }
   const handleInput = async (e) => {
     e.preventDefault();
@@ -53,6 +54,7 @@ function InstanceSelector({onInstanceSelected}) {
         console.log(costs);
       const instance = instanceFromStringMatrix(jobs, machines, costs.trim());
       setInstance(instance)
+      onInstanceSelected(instance)
       console.log(instance);
     } catch (error) {
       alert(error.message);
@@ -68,6 +70,7 @@ function InstanceSelector({onInstanceSelected}) {
         try {
           const instance = parseCSVFileAsInstance(evt.target.result);
           setInstance(instance)
+          onInstanceSelected(instance)
           console.log(instance);
         } catch (error) {
           alert(error.message);
